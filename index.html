@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,7 +12,9 @@
 
     </ul>
 
-
+    <input type="text" id="title" placeholder="enter tittle"> <br> <br>
+    <input type="text" id="bodyContent" placeholder="enter description"> <br><br>
+    <button id="submit">Submit</button>
 
     <script>
         /************* JSON, JSON STRUCTURE, PARSE, STRINGIFY, JSON PROPERTIES **************/
@@ -33,6 +35,7 @@
 
 
         /*********** LOAD DATA, JSON PLACEHOLDER, GET DATA, DISPLAY DATA ON UI **********/
+        /*
         fetch('https://jsonplaceholder.typicode.com/users')
                 .then(response => response.json())
                 .then(json => displayUsers(json))
@@ -48,8 +51,28 @@
                     }
                 }
 
+            */
+
+            /****  Send data to server, HTTP Post, JSON Stringify ***/
 
 
+            document.getElementById("submit").addEventListener("click", function(){
+                const title = document.getElementById("title").value;
+                const bodyContent = document.getElementById("bodyContent").value;
+                const post = {title: title, body: bodyContent};
+                postToServer(post);
+            })
+            function postToServer(userInfo){
+                fetch('https://jsonplaceholder.typicode.com/posts', {
+                    method: 'POST',
+                    body: JSON.stringify(userInfo),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                })
+                .then(response => response.json())
+                .then(data => console.log(data))
+            }
 
 
                 
